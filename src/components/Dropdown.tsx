@@ -34,19 +34,20 @@ export function Dropdown(
     options?: DropdownOption[] | undefined;
   } & Omit<SelectHTMLAttributes<HTMLSelectElement>, "children">,
 ) {
-  const { options, className, components, classNames, ...selectProps } = props;
+  const { options, className, components, classNames, onChange, ...selectProps } = props;
 
   const cssClassSelect = [classNames[UI.Dropdown], className].join(" ");
 
   const selectedOption = options?.find(
     ({ value }) => value === selectProps.value,
   );
+
   return (
     <span
       data-disabled={selectProps.disabled}
       className={classNames[UI.DropdownRoot]}
     >
-      <components.Select className={cssClassSelect} {...selectProps}>
+      <components.Select className={cssClassSelect} onInput={onChange} {...selectProps}>
         {options?.map(({ value, label, disabled }) => (
           <components.Option key={value} value={value} disabled={disabled}>
             {label}
